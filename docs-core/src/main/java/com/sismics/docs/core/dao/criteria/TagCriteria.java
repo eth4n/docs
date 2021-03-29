@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Tag criteria.
  *
- * @author bgamard 
+ * @author bgamard
  */
 public class TagCriteria {
     /**
@@ -22,6 +22,11 @@ public class TagCriteria {
      * Document ID.
      */
     private String documentId;
+
+    /**
+     * Tag Name.
+     */
+    private String tagName;
 
     public String getId() {
         return id;
@@ -47,6 +52,15 @@ public class TagCriteria {
 
     public TagCriteria setDocumentId(String documentId) {
         this.documentId = documentId;
+        return this;
+    }
+
+    public String getTagName() {
+        return tagName;
+    }
+
+    public TagCriteria setTagName(String tagName) {
+        this.tagName = tagName;
         return this;
     }
 }

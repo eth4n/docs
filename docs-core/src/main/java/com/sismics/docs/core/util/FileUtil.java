@@ -9,6 +9,8 @@ import com.sismics.docs.core.dao.FileDao;
 import com.sismics.docs.core.dao.UserDao;
 import com.sismics.docs.core.event.DocumentUpdatedAsyncEvent;
 import com.sismics.docs.core.event.FileCreatedAsyncEvent;
+import com.sismics.docs.core.event.FileProcessedAsyncEvent;
+import com.sismics.docs.core.event.FileUpdatedAsyncEvent;
 import com.sismics.docs.core.model.context.AppContext;
 import com.sismics.docs.core.model.jpa.File;
 import com.sismics.docs.core.model.jpa.User;
@@ -34,7 +36,7 @@ import java.util.*;
 
 /**
  * File entity utilities.
- * 
+ *
  * @author bgamard
  */
 public class FileUtil {
@@ -47,7 +49,7 @@ public class FileUtil {
      * File ID of files currently being processed.
      */
     private static Set<String> processingFileSet = Collections.synchronizedSet(new HashSet<>());
-    
+
     /**
      * Optical character recognition on an image.
      *
@@ -82,14 +84,14 @@ public class FileUtil {
 
     /**
      * Remove a file from the storage filesystem.
-     * 
+     *
      * @param fileId ID of file to delete
      */
     public static void delete(String fileId) throws IOException {
         Path storedFile = DirectoryUtil.getStorageDirectory().resolve(fileId);
         Path webFile = DirectoryUtil.getStorageDirectory().resolve(fileId + "_web");
         Path thumbnailFile = DirectoryUtil.getStorageDirectory().resolve(fileId + "_thumb");
-        
+
         if (Files.exists(storedFile)) {
             Files.delete(storedFile);
         }

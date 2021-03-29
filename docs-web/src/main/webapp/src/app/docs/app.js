@@ -208,6 +208,33 @@ angular.module('docs',
         }
       }
     })
+      .state('settings.ifttt', {
+        url: '/ifttt',
+        views: {
+          'settings': {
+            templateUrl: 'partial/docs/settings.ifttt.html',
+            controller: 'SettingsIfttt'
+          }
+        }
+      })
+      .state('settings.ifttt.edit', {
+        url: '/edit/:id',
+        views: {
+          'ifttt': {
+            templateUrl: 'partial/docs/settings.ifttt.edit.html',
+            controller: 'SettingsIftttEdit'
+          }
+        }
+      })
+      .state('settings.ifttt.add', {
+        url: '/add',
+        views: {
+          'ifttt': {
+            templateUrl: 'partial/docs/settings.ifttt.edit.html',
+            controller: 'SettingsIftttEdit'
+          }
+        }
+      })
     .state('settings.group', {
       url: '/group',
       views: {
@@ -466,10 +493,10 @@ angular.module('docs',
     var param = function(obj) {
       var query = '';
       var name, value, fullSubName, subName, subValue, innerObj, i;
-      
+
       for(name in obj) {
         value = obj[name];
-        
+
         if(value instanceof Array) {
           for(i=0; i<value.length; ++i) {
             subValue = value[i];
@@ -491,10 +518,10 @@ angular.module('docs',
           query += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '&';
         }
       }
-      
+
       return query.length ? query.substr(0, query.length - 1) : query;
     };
-    
+
     return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
   }];
 

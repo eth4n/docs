@@ -273,6 +273,7 @@
     "menu_file_importer": "Bulk file importer",
     "menu_general_settings": "General settings",
     "menu_workflow": "Workflow",
+    "menu_ifttt": "Ifttt rules",
     "menu_users": "Users",
     "menu_groups": "Groups",
     "menu_vocabularies": "Vocabularies",
@@ -323,6 +324,54 @@
         "disable_totp_btn": "Disable two-factor authentification for this user",
         "disable_totp_title": "Disable two-factor authentication",
         "disable_totp_message": "Are you sure you want to disable two-factor authentication for this user?"
+      }
+    },
+    "ifttt": {
+      "title": "If-this-then-that rule configuration",
+      "add_workflow": "Add a rule",
+      "name": "Name",
+      "create_date": "Create date",
+      "edit": {
+        "delete_ifttt_title": "Delete Ifttt rule",
+        "delete_ifttt_message": "Do you really want to delete this rule?",
+        "edit_ifttt_title": "Edit \"{{ name }}\"",
+        "add_ifttt_title": "Add rule",
+        "add_rule": "Add a new rule",
+        "name": "Name",
+        "name_placeholder": "Step name or description",
+        "conditions": "Conditions",
+        "add_conditions":"Add condition",
+        "property": "Document property",
+        "comparator": "Comparator",
+        "value": "Value",
+        "properties_tags": "Tags",
+        "properties_file_content": "File content",
+        "properties_meta_boolean": "Boolean meta data",
+        "comparator_matches": "matches",
+        "comparator_not_matches": "not matches",
+        "comparator_contains": "contains",
+        "comparator_not_contains": "not contains",
+        "comparator_is_true": "is true",
+        "comparator_is_false": "is false",
+        "actions": "Actions",
+        "action": {
+          "title": "Action",
+          "add_tag": {
+            "name": "Add tag",
+            "tag": "Tag"
+          },
+          "call_webhook": {
+            "name": "Call webhook",
+            "method": "Method",
+            "url": "URL"
+          },
+          "set_title": {
+            "name": "Set title",
+            "title": "Title"
+          }
+        },
+
+        "add_action": "Add action"
       }
     },
     "workflow": {

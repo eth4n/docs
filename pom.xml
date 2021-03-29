@@ -51,11 +51,12 @@
     <org.jsoup.jsoup.version>1.11.3</org.jsoup.jsoup.version>
     <com.squareup.okhttp3.okhttp.version>3.11.0</com.squareup.okhttp3.okhttp.version>
     <org.apache.directory.api.api-all.version>1.0.0</org.apache.directory.api.api-all.version>
+    <com.fasterxml.jackson.core.jackson-databind.version>2.12.2</com.fasterxml.jackson.core.jackson-databind.version>
 
     <org.eclipse.jetty.jetty-server.version>9.4.17.v20190418</org.eclipse.jetty.jetty-server.version>
     <org.eclipse.jetty.jetty-webapp.version>9.4.17.v20190418</org.eclipse.jetty.jetty-webapp.version>
     <org.eclipse.jetty.jetty-servlet.version>9.4.17.v20190418</org.eclipse.jetty.jetty-servlet.version>
-    
+
     <!-- Plugins version -->
     <org.apache.maven.plugins.maven-antrun-plugin.version>1.8</org.apache.maven.plugins.maven-antrun-plugin.version>
     <org.apache.maven.plugins.maven-jar-plugin.version>3.1.0</org.apache.maven.plugins.maven-jar-plugin.version>
@@ -63,7 +64,7 @@
     <org.apache.maven.plugins.maven-surefire-plugin.version>2.22.1</org.apache.maven.plugins.maven-surefire-plugin.version>
     <org.eclipse.jetty.jetty-maven-plugin.version>9.4.17.v20190418</org.eclipse.jetty.jetty-maven-plugin.version>
   </properties>
-  
+
   <scm>
     <connection>scm:git:https://github.com/sismics/docs.git</connection>
     <developerConnection>scm:git:https://github.com/docs/docs.git</developerConnection>
@@ -95,7 +96,7 @@
         <artifactId>maven-war-plugin</artifactId>
         <version>${org.apache.maven.plugins.maven-war-plugin.version}</version>
       </plugin>
-      
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
@@ -111,7 +112,7 @@
           <reuseForks>false</reuseForks>
         </configuration>
       </plugin>
-      
+
       <plugin>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
@@ -119,13 +120,13 @@
       </plugin>
     </plugins>
   </build>
-        
+
   <modules>
     <module>docs-core</module>
     <module>docs-web-common</module>
     <module>docs-web</module>
   </modules>
-  
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -133,38 +134,38 @@
         <artifactId>docs-core</artifactId>
         <version>${project.version}</version>
       </dependency>
-    
+
       <dependency>
         <groupId>com.sismics.docs</groupId>
         <artifactId>docs-web-common</artifactId>
         <version>${project.version}</version>
       </dependency>
-    
+
       <dependency>
         <groupId>com.sismics.docs</groupId>
         <artifactId>docs-web-common</artifactId>
         <type>test-jar</type>
         <version>${project.version}</version>
       </dependency>
-    
+
       <dependency>
         <groupId>com.sismics.docs</groupId>
         <artifactId>docs-web</artifactId>
         <version>${project.version}</version>
       </dependency>
-    
+
       <dependency>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-server</artifactId>
         <version>${org.eclipse.jetty.jetty-server.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-webapp</artifactId>
         <version>${org.eclipse.jetty.jetty-webapp.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-servlet</artifactId>
@@ -176,13 +177,13 @@
         <artifactId>javax.servlet-api</artifactId>
         <version>${javax.servlet.javax.servlet-api.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-compress</artifactId>
         <version>${org.apache.commons.commons-compress.version}</version>
       </dependency>
-            
+
       <dependency>
         <groupId>commons-lang</groupId>
         <artifactId>commons-lang</artifactId>
@@ -200,7 +201,7 @@
         <artifactId>commons-email</artifactId>
         <version>${org.apache.commons.commons-email.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
@@ -224,19 +225,19 @@
         <artifactId>log4j</artifactId>
         <version>${log4j.log4j.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-log4j12</artifactId>
         <version>${org.slf4j.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
         <version>${org.slf4j.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>jcl-over-slf4j</artifactId>
@@ -266,7 +267,7 @@
         <artifactId>jersey-container-servlet</artifactId>
         <version>${org.glassfish.jersey.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.glassfish.jersey.media</groupId>
         <artifactId>jersey-media-json-processing</artifactId>
@@ -278,7 +279,7 @@
         <artifactId>jersey-media-multipart</artifactId>
         <version>${org.glassfish.jersey.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.glassfish.jersey.inject</groupId>
         <artifactId>jersey-hk2</artifactId>
@@ -290,7 +291,13 @@
         <artifactId>jersey-client</artifactId>
         <version>${org.glassfish.jersey.version}</version>
       </dependency>
-      
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${com.fasterxml.jackson.core.jackson-databind.version}</version>
+      </dependency>
+
       <dependency>
         <groupId>org.glassfish.jersey.test-framework.providers</groupId>
         <artifactId>jersey-test-framework-provider-bundle</artifactId>
@@ -309,7 +316,7 @@
         <artifactId>jersey-test-framework-provider-grizzly2</artifactId>
         <version>${org.glassfish.jersey.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.glassfish.jersey.containers</groupId>
         <artifactId>jersey-container-grizzly2-servlet</artifactId>
@@ -333,19 +340,19 @@
         <artifactId>hibernate-core</artifactId>
         <version>${org.hibernate.hibernate.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate-entitymanager</artifactId>
         <version>${org.hibernate.hibernate.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate-c3p0</artifactId>
         <version>${org.hibernate.hibernate.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>commons-dbcp</groupId>
         <artifactId>commons-dbcp</artifactId>
@@ -369,25 +376,25 @@
         <artifactId>lucene-core</artifactId>
         <version>${org.apache.lucene.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.apache.lucene</groupId>
         <artifactId>lucene-analyzers-common</artifactId>
         <version>${org.apache.lucene.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.apache.lucene</groupId>
         <artifactId>lucene-queryparser</artifactId>
         <version>${org.apache.lucene.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.apache.lucene</groupId>
         <artifactId>lucene-backward-codecs</artifactId>
         <version>${org.apache.lucene.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.apache.lucene</groupId>
         <artifactId>lucene-suggest</artifactId>
@@ -405,25 +412,25 @@
         <artifactId>imgscalr-lib</artifactId>
         <version>${org.imgscalr.imgscalr-lib.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.apache.pdfbox</groupId>
         <artifactId>pdfbox</artifactId>
         <version>${org.apache.pdfbox.pdfbox.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.bouncycastle</groupId>
         <artifactId>bcprov-jdk15on</artifactId>
         <version>${org.bouncycastle.bcprov-jdk15on.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>fr.opensagres.xdocreport</groupId>
         <artifactId>fr.opensagres.odfdom.converter.pdf</artifactId>
         <version>${fr.opensagres.xdocreport.version}</version>
       </dependency>
-  
+
       <dependency>
         <groupId>fr.opensagres.xdocreport</groupId>
         <artifactId>fr.opensagres.poi.xwpf.converter.pdf</artifactId>
@@ -472,7 +479,7 @@
         <artifactId>servlet</artifactId>
         <version>${com.twelvemonkeys.imageio.version}</version>
       </dependency>
-      
+
       <!-- ImageIO plugins -->
       <!-- JPEG -->
       <dependency>
@@ -504,5 +511,5 @@
 
     </dependencies>
   </dependencyManagement>
-  
+
 </project>

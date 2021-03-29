@@ -1,0 +1,28 @@
+<h1>
+  <span translate="settings.ifttt.title"></span>
+  <a class="btn btn-primary" href="#/settings/ifttt/add">{{ 'settings.ifttt.edit.add_rule' | translate }}</a>
+</h1>
+
+<div class="row">
+  <div class="col-md-4 well">
+    <table class="table table-hover table-users">
+      <thead>
+        <tr>
+          <th>{{ 'settings.ifttt.name' | translate }}</th>
+          <th>{{ 'settings.ifttt.create_date' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="rule in rules | orderBy: 'name'" ng-click="editRule(rule)"
+            ng-class="{ active: $stateParams.id == rule.id }">
+          <td>{{ rule.name }}</td>
+          <td>{{ rule.create_date | date: dateFormat }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-md-8">
+    <div ui-view="ifttt"></div>
+  </div>
+</div>

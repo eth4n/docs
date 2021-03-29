@@ -143,6 +143,7 @@ public class AppContext {
         asyncEventBus.register(new AclCreatedAsyncListener());
         asyncEventBus.register(new AclDeletedAsyncListener());
         asyncEventBus.register(new WebhookAsyncListener());
+        asyncEventBus.register(new IftttAsyncListener());
 
         mailEventBus = newAsyncEventBus();
         mailEventBus.register(new PasswordLostAsyncListener());

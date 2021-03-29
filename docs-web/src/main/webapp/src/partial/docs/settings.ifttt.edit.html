@@ -1,0 +1,192 @@
+<span class="fas fa-circle-notch fa-spin" ng-show="!rule && isEdit()"></span>
+
+<div ng-show="rule || !isEdit()">
+  <h2 ng-show="isEdit()" translate="settings.ifttt.edit.edit_ifttt_title" translate-values="{ name: rule.name }"></h2>
+  <h2 ng-show="!isEdit()" translate="settings.ifttt.edit.add_ifttt_title"></h2>
+
+  <form class="form-horizontal" name="editRuleForm" novalidate>
+    <div class="form-group" ng-class="{ 'has-error': !editRuleForm.name.$valid && editRuleForm.$dirty, success: editRuleForm.name.$valid }">
+      <label class="col-sm-2 control-label" for="inputName">{{ 'settings.ifttt.edit.name' | translate }}</label>
+      <div class="col-sm-7">
+        <input name="name" type="text" id="inputName" required class="form-control"
+               ng-minlength="3" ng-maxlength="50" ng-attr-placeholder="{{ 'settings.ifttt.edit.name' | translate }}" ng-model="rule.name"/>
+      </div>
+
+      <div class="col-sm-3">
+        <span class="help-block" ng-show="editRuleForm.name.$error.required && editRuleForm.$dirty">{{ 'validation.required' | translate }}</span>
+        <span class="help-block" ng-show="editRuleForm.name.$error.minlength && editRuleForm.$dirty">{{ 'validation.too_short' | translate }}</span>
+        <span class="help-block" ng-show="editRuleForm.name.$error.maxlength && editRuleForm.$dirty">{{ 'validation.too_long' | translate }}</span>
+      </div>
+    </div>
+
+    <h2>
+      <span translate="settings.ifttt.edit.conditions" ></span>
+      <div class="btn btn-primary ml-10" ng-click="addCondition()">{{ 'settings.ifttt.edit.add_conditions' | translate }}</div>
+    </h2>
+    <div ng-model="conditions">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row route-step-row">
+            <div class="col-xs-12">
+              <div class="row">
+                <div class="col-xs-4">
+                  <strong>
+                    {{ 'settings.ifttt.edit.property' | translate }}
+                  </strong>
+                </div>
+                <div class="col-xs-4">
+                  <strong>{{ 'settings.ifttt.edit.comparator' | translate }}</strong>
+                </div>
+                <div class="col-xs-4">
+                  <strong>{{ 'settings.ifttt.edit.value' | translate }}</strong>
+                </div>
+              </div>
+              <div class="row"  ng-repeat="condition in conditions">
+                <div class="col-xs-4">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <span class="fas fa-tags" ng-if="condition.data.property == 'DOCUMENT_TAGS'"></span>
+                      <span class="fas fa-file-alt" ng-if="condition.data.property == 'FILE_CONTENT'"></span>
+                      <span class="fas balance-scale-left" ng-if="condition.data.property == 'DOCUMENT_META_BOOLEAN'"></span>
+                    </span>
+                    <select class="form-control" name="type-{{ $index }}" ng-model="condition.data.property" ng-change="updateComparators(condition)" >
+                      <option value="DOCUMENT_TAGS">{{ 'settings.ifttt.edit.properties_tags' | translate }}</option>
+                      <option value="FILE_CONTENT">{{ 'settings.ifttt.edit.properties_file_content' | translate }}</option>
+                      <option value="DOCUMENT_META_BOOLEAN">{{ 'settings.ifttt.edit.properties_meta_boolean' | translate }}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-xs-3">
+                  <div class="input-group">
+                    <select class="form-control" name="type-{{ $index }}" ng-model="condition.data.comparator" >
+                      <option ng-show="condition.data.property == 'FILE_CONTENT'" value="MATCHES">{{ 'settings.ifttt.edit.comparator_matches' | translate }}</option>
+                      <option ng-show="condition.data.property == 'FILE_CONTENT'" value="NOT_MATCHES">{{ 'settings.ifttt.edit.comparator_not_matches' | translate }}</option>
+                      <option ng-show="condition.data.property == 'DOCUMENT_TAGS'" value="CONTAINS">{{ 'settings.ifttt.edit.comparator_contains' | translate }}</option>
+                      <option ng-show="condition.data.property == 'DOCUMENT_TAGS'" value="NOT_CONTAINS">{{ 'settings.ifttt.edit.comparator_not_contains' | translate }}</option>
+                      <option ng-show="condition.data.property == 'DOCUMENT_META_BOOLEAN'" value="IS_TRUE">{{ 'settings.ifttt.edit.comparator_is_true' | translate }}</option>
+                      <option ng-show="condition.data.property == 'DOCUMENT_META_BOOLEAN'" value="IS_FALSE">{{ 'settings.ifttt.edit.comparator_is_false' | translate }}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-xs-4" ng-show="condition.data.property != 'DOCUMENT_META_BOOLEAN'">
+                  <input name="comparingTo" type="text" id="inputComparingTo" required class="form-control"
+                         ng-minlength="0" ng-maxlength="50" ng-attr-placeholder="{{ 'settings.ifttt.edit.comparing_to' | translate }}" ng-model="condition.data.comparing_to"/>
+                </div>
+                <div class="col-xs-4" ng-show="condition.data.property == 'DOCUMENT_META_BOOLEAN'">
+                  <input name="metadata" type="text" id="inputMetadata" required class="form-control"
+                         ng-minlength="0" ng-maxlength="50" ng-attr-placeholder="{{ 'settings.ifttt.edit.metadata' | translate }}" ng-model="condition.data.metadata"/>
+                </div>
+                <div class="col-xs-1">
+                <a href ng-click="removeCondition(condition)">
+                  <span class="fas fa-minus-circle"></span>
+                </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <h2>
+      <span translate="settings.ifttt.edit.actions"></span>
+      <div class="btn btn-primary ml-10" ng-click="addAction()">{{ 'settings.ifttt.edit.add_action' | translate }}</div>
+    </h2>
+
+    <div ng-model="actions">
+      <div class="panel panel-default" ng-repeat="action in actions">
+        <div class="panel-body">
+          <div class="row route-step-row">
+            <div class="col-xs-12">
+              <div class="row">
+                <div class="col-xs-4">
+                  <strong>
+                    {{ 'settings.ifttt.edit.action.title' | translate }}
+                  </strong>
+                </div>
+                <div class="col-xs-8" ng-show="action.action == 'AddTag'">
+                  <strong>
+                    {{ 'settings.ifttt.edit.action.add_tag.tag' | translate }}
+                  </strong>
+                </div>
+                <div class="col-xs-8" ng-show="action.action == 'SetDocumentTitle'">
+                  <strong>
+                    {{ 'settings.ifttt.edit.action.set_title.title' | translate }}
+                  </strong>
+                </div>
+                <div class="col-xs-2" ng-show="action.action == 'CallWebhook'">
+                  <strong>
+                    {{ 'settings.ifttt.edit.action.call_webhook.method' | translate }}
+                  </strong>
+                </div>
+                <div class="col-xs-6" ng-show="action.action == 'CallWebhook'">
+                  <strong>
+                    {{ 'settings.ifttt.edit.action.call_webhook.url' | translate }}
+                  </strong>
+                </div>
+              </div>
+              <div class="row" >
+                <div class="col-xs-4">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                      <span class="fas fa-tags" ng-if="action.action == 'AddTag'"></span>
+                      <span class="fas fa-external-link-alt" ng-if="action.action == 'CallWebhook'"></span>
+                      <span class="fas fa-heading" ng-if="action.action == 'SetDocumentTitle'"></span>
+                    </span>
+                    <select class="form-control" name="type-{{ $index }}" ng-model="action.action"  ng-change="setDefaultWebhookMethod(action)">
+                      <option value="AddTag">{{ 'settings.ifttt.edit.action.add_tag.name' | translate }}</option>
+                      <option value="CallWebhook">{{ 'settings.ifttt.edit.action.call_webhook.name' | translate }}</option>
+                      <option value="SetDocumentTitle">{{ 'settings.ifttt.edit.action.set_title.name' | translate }}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-xs-7" ng-show="action.action == 'AddTag'">
+                  <input name="tag" type="text" id="inputTag" required class="form-control"
+                         ng-minlength="0" ng-maxlength="100" ng-attr-placeholder="{{ 'settings.ifttt.edit.action.add_tag.tag' | translate }}" ng-model="action.data.tag"/>
+
+                </div>
+                <div class="col-xs-7" ng-show="action.action == 'SetDocumentTitle'">
+                  <input name="title" type="text" id="inputTitle" required class="form-control"
+                         ng-minlength="0" ng-maxlength="100" ng-attr-placeholder="{{ 'settings.ifttt.edit.action.set_title.title' | translate }}" ng-model="action.data.title"/>
+
+                </div>
+                <div class="col-xs-2" ng-show="action.action == 'CallWebhook'">
+                  <div class="input-group">
+                    <select class="form-control" name="type-{{ $index }}" ng-model="action.data.method">
+                      <option value="POST">POST</option>
+                      <option value="PUT">PUT</option>
+                      <option value="GET">GET</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-xs-5" ng-show="action.action == 'CallWebhook'">
+                  <input name="url" type="text" id="inputUrl" required class="form-control"
+                         ng-minlength="0" ng-maxlength="100" ng-attr-placeholder="{{ 'settings.ifttt.edit.action.call_webhook.url' | translate }}" ng-model="action.data.url"/>
+
+                </div>
+                <div class="col-xs-1">
+                  <a href ng-click="removeAction(action)">
+                    <span class="fas fa-minus-circle"></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clearfix form-group mt-10">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary" ng-click="edit()">
+          <span class="fas fa-pencil-alt"></span> {{ 'save' | translate }}
+        </button>
+        <button type="button" class="btn btn-danger" ng-click="remove()" ng-show="isEdit()">
+          <span class="fas fa-trash"></span> {{ 'delete' | translate }}
+        </button>
+      </div>
+    </div>
+  </form>
+
+</div>

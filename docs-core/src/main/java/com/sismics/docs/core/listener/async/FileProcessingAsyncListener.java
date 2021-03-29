@@ -6,18 +6,17 @@ import com.sismics.docs.core.dao.FileDao;
 import com.sismics.docs.core.dao.UserDao;
 import com.sismics.docs.core.event.FileCreatedAsyncEvent;
 import com.sismics.docs.core.event.FileEvent;
+import com.sismics.docs.core.event.FileProcessedAsyncEvent;
 import com.sismics.docs.core.event.FileUpdatedAsyncEvent;
 import com.sismics.docs.core.model.context.AppContext;
 import com.sismics.docs.core.model.jpa.File;
 import com.sismics.docs.core.model.jpa.User;
-import com.sismics.docs.core.util.DirectoryUtil;
-import com.sismics.docs.core.util.EncryptionUtil;
-import com.sismics.docs.core.util.FileUtil;
-import com.sismics.docs.core.util.TransactionUtil;
+import com.sismics.docs.core.util.*;
 import com.sismics.docs.core.util.format.FormatHandler;
 import com.sismics.docs.core.util.format.FormatHandlerUtil;
 import com.sismics.util.ImageUtil;
 import com.sismics.util.Scalr;
+import com.sismics.util.context.ThreadLocalContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,7 +31,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Listener on file processing.
- * 
+ *
  * @author bgamard
  */
 public class FileProcessingAsyncListener {
@@ -122,6 +121,7 @@ public class FileProcessingAsyncListener {
             } else {
                 AppContext.getInstance().getIndexingHandler().updateFile(freshFile);
             }
+            IftttUtil.executeTrigger(event);
         });
 
         FileUtil.endProcessingFile(event.getFileId());
